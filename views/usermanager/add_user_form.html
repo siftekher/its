@@ -1,0 +1,121 @@
+<script type="text/javascript" src="/its/views/usermanager/user_manager.js"></script>
+{if $msg neq ''}  
+<div class="its-post_msg">    	
+    <b class="b1f"></b><b class="b2f"></b><b class="b3f"></b><b class="b4f"></b>	 	
+       	   <div class="msg">{$msg}</div>
+    <b class="b4f"></b><b class="b3f"></b><b class="b2f"></b><b class="b1f"></b>         
+</div>
+{/if}	  
+<div class="its-post">
+    <div class="its-post-tl"></div>
+    <div class="its-post-tr"></div>
+    <div class="its-post-bl"></div>
+    <div class="its-post-br"></div>
+    <div class="its-post-tc"></div>
+    <div class="its-post-bc"></div>
+    <div class="its-post-cl"></div>
+    <div class="its-post-cr"></div>
+    <div class="its-post-cc"></div>
+    <div class="its-post-body">
+    <div class="its-post-inner its-itsicle">                                    
+       <div class="its-postcontent">    
+       	<h2>Manage User >> {if $user_id eq ''} Adding a New User{else}Editing an User{/if}</h2>       	
+          <form name="add_user" onSubmit="return doValidation();" id="add_user" {if $user_id eq ''} action="/its/run.php/UserManager/add" {else} action="/its/run.php/UserManager/update/{$user_id}" {/if} method="post">
+            <div class="manage_add_new_user">
+            <div class="field_box">
+             <div class="field_label">First Name<span id="first_name_error_msg" class="error_msg"></span></div>   	         
+   	       <div class="input_box"><input type="text" name="first_name" id="first_name" size="40" value="{$first_name}"></div>
+           </div>          
+   	       <div class="field_box">
+   	       <div class="field_label">Last Name<span id="last_name_error_msg" class="error_msg"></span></div>
+   	       <div class="input_box"><input type="text" name="last_name" id="last_name" size="40" value="{$last_name}"></div>
+           </div>
+           <div class="field_box2">
+   	         <div class="field_label">Status</div>
+   	         <div class="input_box" style="text-align:left;">    	   	  	   	    	         	
+               <select name="status" id="status">
+               	 <option selected>Select</option>
+                 <option value="1" {if $status eq 1}selected{/if}>Active</option>
+                 <option value="2" {if $status eq 2}selected{/if}>Inactive</option>
+               </select>   	   	                
+   	         </div>
+             </div>
+           
+   	            	       
+   	         <div class="field_label">Email<span id="email_error_msg" class="error_msg"></span></div>
+   	         <div class="input_box"><input type="text" name="email" id="email" size="40" value="{$email}" onblur="validateEmail();"></div>
+
+             <div class="field_box">
+   	         <div class="field_label">Password<span id="password_error_msg" class="error_msg"></span></div>
+   	         <div class="input_box"><input type="password" name="password" id="password" size="40"></div>
+             </div>
+             <div class="field_box">
+             <div class="field_label">Re-enter password</div>
+   	         <div class="input_box"><input type="password" name="re_enter_password" id="re_enter_password" size="40"></div>
+             </div>
+   	         <div class="cleared"></div> 
+   	             	     	         
+   	         
+            </div>     	      	      	      	      	   
+            <div class="manage_add_new_user">
+   	        <div class="submit_button">
+   	        	<input class="its-button" type="submit" {if $user_id eq ''} value="Add" {else} value="Update" {/if}>
+   	        </div>
+            <div class="submit_button">
+   	        	<input class="its-button" type="submit" value="Cancel" >
+   	        </div>
+   	        <input type="hidden" value="{$involvement}" name="theValue" id="theValue"/> 
+   	        <input type="hidden" value="{$user_id}" name="user_id" id="user_id"/>  
+            </div>
+            {foreach key=index item=dropdownRow from=$dropdown}
+   	         <div id="dropdown_container{$index}" style="clear:both;">
+   	            {assign var=source_type_name value="source_type"|cat:"$index"}	  
+   	            {assign var=user_type_name value="user_type"|cat:"$index"}   	         
+   	            <div class="field_box">
+                {if $index eq 0}<div class="field_label">Source</div>{/if}
+   	            <div class="input_box" style="text-align:left;margin-right:10px;float:left;">
+                 <select name="source_type{$index}" id="source_type{$index}">
+                      <option>Select a source</option>
+                 	{foreach item=thisSource from=$source_list}
+                      <option value="{$thisSource->source_id}" {if $dropdownRow.$source_type_name eq $thisSource->source_id}selected{/if}>
+                      	{$thisSource->short_name}
+                      </option>
+                   {/foreach}                
+                 </select>    	         	   
+   	            </div>
+                </div>
+                <div class="field_box">  
+   	            {if $index eq 0}<div class="field_label2">User Type</div>{/if}
+   	            <div class="input_box" style="text-align:left;">    	   	  	   	 
+                <select name="user_type{$index}" id="user_type{$index}">
+                  <option>Select a role</option>
+                  <option value="1" {if $dropdownRow.$user_type_name eq 1}selected{/if}>Stuff</option>
+                  <option value="2" {if $dropdownRow.$user_type_name eq 2}selected{/if}>Executive</option>
+                  <option value="3" {if $dropdownRow.$user_type_name eq 3}selected{/if}>Supervisor</option>
+                  <option value="4" {if $dropdownRow.$user_type_name eq 4}selected{/if}>Authorized Source</option>
+                </select>                  
+   	               <a href="#" onclick="removeElementFromEdit({$index})"><img src="/its/views/common/images/remove.png"></a>   	            
+   	            </div>
+                </div>  
+            </div>
+   	        {/foreach}      
+   	        <div id="myDiv"></div>       	     	              	   	         	          
+   	        <div class="add_another" style="clear:both;"><a href="javascript:void(0);" onclick="addElement('{$source_list_str}');">Add another role for this user</a></div>
+          </form>   
+        </div>
+       <div class="cleared"></div>                                                                              
+    </div>
+</div>                          
+</div>
+
+</div>
+	 
+{literal}
+ <script>
+    $(document).ready(function() {
+       $('.its-post_msg').fadeOut(6000);
+    });           
+ </script>	 
+{/literal}	 	 	 	 	 
+
+

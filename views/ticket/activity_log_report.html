@@ -1,0 +1,82 @@
+<div class="its-post">
+    <div class="its-post-tl"></div>
+    <div class="its-post-tr"></div>
+    <div class="its-post-bl"></div>
+    <div class="its-post-br"></div>
+
+    <div class="its-post-tc"></div>
+    <div class="its-post-bc"></div>
+    <div class="its-post-cl"></div>
+    <div class="its-post-cr"></div>
+    <div class="its-post-cc"></div>
+    <div class="its-post-body">
+       <div class="its-post-inner its-itsicle">                                    
+          <div class="its-postcontent">
+             <h2 style="margin-bottom:5px;">Activity Report (Showing activities for last 30 days)</h2>
+          
+             <span>(To view activity for a specific user, click on her name. To view activity for a specific ticket, click on the ticket number)</span>
+             <div class="cleared"></div>
+             <a href="/its/run.php/Ticket/log/unsupress" style="float:right; padding-top:10px; font-size:14px; font-weight:bold">Unsuppress login/logout activities</a>
+             <div class="cleared"></div>
+             <form name="new_ticket_frm" id="show_activity_frm" action="" method="post">
+             <div class="text_area">
+               
+<div class="log_text">
+
+{if $activityLog}
+{if $today eq 'no'}
+<br /><b>Today</b><br />
+-No activity logged
+{/if}
+{foreach from=$activityLog key=key1 item=item1}
+{if $yesterday eq 'no' && $key1 neq 'Today'}
+<br /><b>Yesterday</b><br />
+-No activity logged
+{assign var=yesterday value='yes'}
+{/if}
+<br />
+<b>{$key1}</b><br />
+
+{foreach from=$item1 key=key2 item=item2}
+{$item2->log_time}: {$item2->active_first_name} {$item2->active_last_name}
+{if $item2->activity_type eq 1} assigned 
+{if $item2->active_user eq $item2->affected_user}himself {if $item2->affected_ticket}ticket #{$item2->affected_ticket} {/if} {/if}
+{if $item2->active_user neq $item2->affected_user}{if $item2->affected_ticket}ticket #{$item2->affected_ticket}{/if} to {$item2->affected_last_name} {/if}
+{/if}
+
+{if $item2->activity_type eq 2} changed status of ticket #{if $item2->affected_ticket}{$item2->affected_ticket} {/if}
+{/if}
+{if $item2->activity_type eq 3} changed status of {if $item2->affected_ticket}ticket #{$item2->affected_ticket} to DELETED{/if}{/if}
+{if $item2->activity_type eq 4} changed status of {if $item2->affected_ticket}ticket #{$item2->affected_ticket} to CLOSED{/if}{/if}
+
+{if $item2->activity_type eq 5} changed status of {if $item2->affected_ticket}ticket #{$item2->affected_ticket} to CLARIFICATION REQUIRED{/if}{/if}
+{if $item2->activity_type eq 6} changed status of {if $item2->affected_ticket}ticket #{$item2->affected_ticket} to COMPLETED{/if}{/if}
+
+{if $item2->activity_type eq 7} sign in. {/if}
+{if $item2->activity_type eq 8} sign out. {/if}
+
+<br />
+
+{/foreach}
+
+{/foreach}
+{else}
+{if $today eq 'no'}
+<br /><b>Today</b><br />
+-No activity logged
+{/if}
+{if $yesterday eq 'no'}
+<br /><b>Yesterday</b><br />
+-No activity logged
+{/if}
+{/if}
+
+</div>
+             </div>
+             <div class="cleared"></div>   	            
+             </form>      
+             <div class="cleared"></div>                                                                           
+          </div>
+       </div>                          
+    </div>
+</div>

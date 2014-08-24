@@ -1,0 +1,9 @@
+
+You can update the Ticket using the link given below:
+
+{foreach from=$ticketList item=item key=key}
+http://{$smarty.const.SITE_URL}/its/run.php/UserTicket/update/{$userId}/{$item->ticket_id}/{$item->authKeys}
+{/foreach}
+
+Thanks,
+ITS Team

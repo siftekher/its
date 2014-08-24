@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <title>Home </title>
+
+    <link rel="stylesheet" href="/its/views/common/style.css" type="text/css" media="screen" />    
+    <!--[if IE 6]><link rel="stylesheet" href="/its/views/common/style.ie6.css" type="text/css" media="screen" /><![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" href="/its/views/common/style.ie7.css" type="text/css" media="screen" /><![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/its/ext/js/jquery/theme/redmond/jquery-ui-1.8.1.custom.css" />
+    <script type="text/javascript" src="/its/ext/js/jquery/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.core.min.js"></script>
+    <script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.widget.min.js"></script>
+    <script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.mouse.min.js"></script>
+    <script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.button.min.js"></script>
+    <script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.draggable.min.js"></script>
+    <script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.position.min.js"></script>
+    <script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.resizable.min.js"></script>
+    <script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.dialog.min.js"></script>
+    <script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.effects.core.min.js"></script>
+    <script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.autocomplete.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/its/ext/js/jquery/jquery.uploadify-v2.1.0/uploadify.css" />
+    <script type="text/javascript" src="/its/ext/js/jquery/jquery.uploadify-v2.1.0/swfobject.js"></script>
+    <script type="text/javascript" src="/its/ext/js/jquery/jquery.uploadify-v2.1.0/jquery.uploadify.v2.1.0.min.js"></script>
+    <script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.datepicker.min.js"></script>
+    <script type="text/javascript" src="/its/views/common/pagination.lib.js"></script>
+    <script type="text/javascript" src="/its/views/common/dialog.lib.js"></script>
+    <link rel="stylesheet" href="/its/ext/rating/rating.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="/its/ext/rating/jquery.rating.js"></script>
+
+{literal}
+    <script type="text/javascript" src="/its/views/common/script.js"></script> 
+{/literal}
+</head>
+<body>
+<div id="its-page-background-glare">
+        <div id="its-page-background-glare-image"></div>
+    </div>
+    <div id="its-main">
+        <div class="its-sheet">
+            <div class="its-sheet-tl"></div>
+            <div class="its-sheet-tr"></div>
+            <div class="its-sheet-bl"></div>
+            <div class="its-sheet-br"></div>
+            <div class="its-sheet-tc"></div>
+            <div class="its-sheet-bc"></div>
+            <div class="its-sheet-cl"></div>
+            <div class="its-sheet-cr"></div>
+            <div class="its-sheet-cc"></div>
+            <div class="its-sheet-body">
+                <div class="its-header">{$header}</div>
+                <div class="its-nav">
+                  <div class="l"></div>
+                  <div class="r"></div> {$topmenu} </div>
+                <div class="its-content-layout">
+                    <div class="its-content-layout-row">
+                        <div class="its-layout-cell its-sidebar1">
+                                {$leftmenu}
+                        </div>
+                          <!-- Main content begin -->
+                        <div id="body_content" class="its-layout-cell its-content">
+                                                <!-- Post/login begin -->
+                                                {$contents}
+                                                <!-- Post/login end -->
+
+                                                <!-- Pagination begin -->
+<!--
+                     <div class="pagination_container">
+                              <div class="next"><a href="#">Next&gt;&gt;</a></div>
+                              
+                              <ul>
+                                 <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li>3</li>
+                                    <li><a href="#">4</a></li>
+                                </ul>
+                                <div class="prev"><a href="#">&lt;&lt;Prev</a></div>
+                            </div>
+-->
+                                                <!-- Pagination end -->
+                    </div>
+                                                <!-- Main content end -->
+                </div>
+                                                <!-- Body content end -->
+
+                <div class="cleared"></div>
+                            
+
+            <div class="cleared"></div>
+            </div>
+        </div>
+        {$footer}
+        <div class="cleared"></div>
+        <p class="its-page-footer"></p>
+    </div>
+    
+</body>
+</html>

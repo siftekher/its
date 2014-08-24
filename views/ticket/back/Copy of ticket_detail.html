@@ -1,0 +1,143 @@
+{literal}
+<script type="text/javascript">
+   var CUR_TICKET_ID = 0;
+   var CONTROLLER_URL = "{/literal}{$smarty.const.SUPER_CONTROLLER_URL_PREFIX}{literal}";
+   var LOGIN_USER_ID = {/literal}{$login_user_id}{literal};
+</script>
+{/literal}
+<link rel="stylesheet" type="text/css" href="/its/ext/js/jquery/theme/ui-lightness/jquery-ui-1.8.1.custom.css" />
+<script type="text/javascript" src="/its/ext/js/jquery/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.core.min.js"></script>
+<script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.widget.min.js"></script>
+<script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.mouse.min.js"></script>
+<script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.button.min.js"></script>
+<script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.draggable.min.js"></script>
+<script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.position.min.js"></script>
+<script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.resizable.min.js"></script>
+<script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.dialog.min.js"></script>
+<script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.effects.core.min.js"></script>
+<script type="text/javascript" src="/its/ext/js/jquery/ui/jquery.ui.autocomplete.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/its/ext/js/jquery/jquery.uploadify-v2.1.0/uploadify.css" />
+<script type="text/javascript" src="/its/ext/js/jquery/jquery.uploadify-v2.1.0/swfobject.js"></script>
+<script type="text/javascript" src="/its/ext/js/jquery/jquery.uploadify-v2.1.0/jquery.uploadify.v2.1.0.min.js"></script>
+<script type="text/javascript" src="/its/views/ticket/dialog.js"></script>
+
+
+
+<div class="its-post">
+    <div class="its-post-tl"></div>
+    <div class="its-post-tr"></div>
+    <div class="its-post-bl"></div>
+    <div class="its-post-br"></div>
+    <div class="its-post-tc"></div>
+    <div class="its-post-bc"></div>
+    <div class="its-post-cl"></div>
+    <div class="its-post-cr"></div>
+    <div class="its-post-cc"></div>
+    <div class="its-post-body">
+    <div class="its-post-inner its-itsicle">
+    
+                <h2 class="its-postheader">
+                    <img src="/its/views/common/images/postheadericon.png" width="29" height="29" alt="postheadericon" />
+                    {$ticket->ticket_id} - {$ticket->title} ({$ticket->status|upper})											
+                </h2>
+                Submitted on {$ticket->create_date} by 
+                <a href="/its/run.php/list/user/{$first_detail->user_id}">
+                  {$first_detail->first_name} {$first_detail->last_name}
+                </a> 
+                {assign var=source_id value=$ticket->source_id}
+                for {$source_list.$source_id}
+                
+                <div class="its-postcontent">
+                    <!-- itsicle-content -->
+                    
+                    
+                    <p>{$first_detail->notes}</p>
+                    <p>
+                    {assign var=details_id value=$first_detail->details_id}
+                    {assign var=attachments value=$attachments_by_details_id.$details_id}
+                    {if $attachments}
+                     <h4>See Attachments</h4>
+                     One attachment was  added with first response:<br/>
+                     
+                     {foreach from=$attachments item=attachment}
+                        <div><a href="{$smarty.const.SUPER_CONTROLLER_URL_PREFIX}attachment/view/{$attachment->attachment_id}">{$attachment->original_filename}</a></div>
+                     {/foreach}
+                    {/if}
+                    </p>
+                    
+                    <p>
+                     {assign var=placement value=0}
+                     {foreach name=details from=$detail_list item=item}
+                        {if $placement == 0}
+                           {assign var=placement value=$smarty.foreach.details.total}
+                        {else}
+                           {assign var=placement value=$placement-1}
+                        {/if}
+                    <div style="border:0px solid red;">
+                    <h3>
+                     {if $placement == 1}1st{/if}
+                     {if $placement == 2}2nd{/if}
+                     {if $placement == 3}3rd{/if}
+                     {if $placement > 3}{$placement}th{/if} 
+                     Response by {$item->first_name} {$item->last_name} on {$item->create_date}</h3>
+                    <p>
+                    {$item->notes|nl2br}
+                    
+                    
+                    {assign var=details_id value=$item->details_id}
+                    {assign var=attachments value=$attachments_by_details_id.$details_id}
+                    {if $attachments}
+                     <h4>See Attachments</h4>
+                     One attachment was  added with first response:<br/>
+                     
+                     {foreach from=$attachments item=attachment}
+                        <div><a href="{$smarty.const.SUPER_CONTROLLER_URL_PREFIX}attachment/view/{$attachment->attachment_id}">{$attachment->original_filename}</a></div>
+                     {/foreach}
+                    {/if}
+                    
+                    
+                    <br/><br/>
+                    </div>
+                     {/foreach}
+                    </p>
+                    
+                    
+                    
+                    <p>
+                
+                    
+                        <span class="its-button-wrapper">
+                            <span class="l"> </span>
+                            <span class="r"> </span>
+                            <a class="its-button" onclick="showDetailDialog('{$ticket->ticket_id}', true)" href="javascript:void(0)">Add Details</a>
+                        </span>
+                        <span class="its-button-wrapper">
+                            <span class="l"> </span>
+                            <span class="r"> </span>
+                            <a class="its-button" onclick="showTagDialog('{$ticket->ticket_id}')" href="javascript:void(0)">Add Tag</a>
+                        </span>													
+                        <span class="its-button-wrapper">
+                            <span class="l"> </span>
+                            <span class="r"> </span>
+                            <a class="its-button" href="javascript:void(0)">Print</a>
+                        </span>													
+                        
+
+                        </p>
+                    <div class="cleared"></div>
+                    
+                        
+                    <!-- /itsicle-content -->                        
+    </div>
+</div>                          
+</div>
+
+
+
+</div>
+
+
+{$add_detail_dialog}
+
+{$add_tag_dialog}

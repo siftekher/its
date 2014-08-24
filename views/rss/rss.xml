@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+   <channel>
+      <title>EVOKNOW ITS Rss </title>
+      <link>http://dev11.pegasus.evoknow.net/its/run.php/rss</link>
+      <description>Ticket(s) Feed</description>
+{foreach from=$tickets item=ticket}
+
+      <item>
+         <title>{$ticket->ticket_id} - {$ticket->title}</title>
+         <link>http://dev11.pegasus.evoknow.net/its/run.php/ticket/details/{$ticket->ticket_id}</link>
+         <guid>http://dev11.pegasus.evoknow.net/its/run.php/ticket/details/{$ticket->ticket_id}</guid>
+         <description>Submitted on {$ticket->create_date} by {$ticket->first_name|stripslashes} &lt;br&gt; &lt;hr&gt;{$ticket->last_name|stripslashes} {$ticket->notes|stripslashes|strip_tags|truncate:$smarty.const.MAX_EXCERPT_LENGTH:"...":true}</description>
+      </item>
+{/foreach}      
+   </channel>
+</rss>

@@ -1,0 +1,82 @@
+<script type="text/javascript" src="/its/ext/js/jquery/jquery-1.4.2.min.js"></script>
+<SCRIPT type="text/javascript" src="/its/views/settings/change_settings.js"></SCRIPT>
+<link rel="stylesheet" type="text/css" href="/its/views/common/css/default.css" />
+{if $message}
+<div class="message-box" style="background-color:#FDFCDD; border:1px dashed #cccddd; padding:10px;">{$message}</div>
+{/if}
+
+{literal}
+ <script>
+    $(document).ready(function() {
+       $('.message-box').fadeOut(6000);
+    });
+ </script>
+{/literal}
+
+<div class="change_settings_container">
+<div class="change_settings_white_bg_container">
+<div class="change_settings_white_bg_top"></div>
+<div class="change_settings_white_bg">
+<fieldset>
+ <p class="limit_display"><b>Limit display of issues on home page by:</b></p>
+
+  <form id="UserSettings" name="UserSettings" action="{$smarty.const.SUPER_CONTROLLER_URL_PREFIX}ChangeSettings" method="POST">
+   <input type="hidden" name="cmd" value="save_user_settings">
+   
+   <input type=checkbox id="enable_issues_created_by_me"       name="enable_issues_created_by_me"        value="1" {if $ticket_user_settings_info->enable_issues_created_by_me}       checked {/if}>Issues created by me<br>
+   <input type=checkbox id="enable_issues_assigned_to_me"      name="enable_issues_assigned_to_me"       value="1" {if $ticket_user_settings_info->enable_issues_assigned_to_me}      checked {/if}>Issues assigned to me<br>
+   <input type=checkbox id="enable_issues_has_my_involvement"  name="enable_issues_has_my_involvement"   value="1" {if $ticket_user_settings_info->enable_issues_has_my_involvement}  checked {/if}>Issues I am involved as EXECUTIVE/Supervisor<br>
+   <input type=checkbox id="enable_issues_submitted_by_anyone" name="enable_issues_submitted_by_anyone"  value="1" {if $ticket_user_settings_info->enable_issues_submitted_by_anyone} checked {/if}>Issues submitted by anyone in my project<br><br>
+   
+   Show <input type="text" name="show_issues_per_page" id="show_issues_per_page" style="width:30px;" value="{$ticket_user_settings_info->show_issues_per_page}" enable_issues_submitted_by_anyone> issues per page 
+   <span id="show_issues_per_page_error" style="color:red;"></span><br><br>
+   
+   <input type=checkbox id="enable_auto_reminder" name="enable_auto_reminder" value="1" {if $ticket_user_settings_info->enable_auto_reminder} checked {/if}>Send me daily reminder<br><br>
+</fieldset>
+</div>
+   <div class="change_settings_white_bg_bottom"></div>
+</div>
+
+<div class="right_contents">
+   
+   <div class="change_settings_blue_bg_container">
+      <div class="change_settings_blue_bg_top"></div>
+      <div class="change_settings_blue_bg">
+         <fieldset>
+            <p style="float: left; padding-right: 10px;">Email address: <span id="email_address_error" style="color:red;"></span><br>
+            <input type="text" class="text"  name="email_address" id="email_address" value="{$user_settings_info->email}">
+            <div style="clear: both;"></div>
+            <p style="float: left; padding-right: 10px;">New password<br />
+            <input type="password" class="text" name="new_password" id="new_password" value=""><br>
+            <span id="confirm_new_password_error" style="color:red;"></span>
+            
+            <p style="float: left; padding-right: 10px;">Confirm new password<br />
+            <input type="password" class="text" name="confirm_new_password" id="confirm_new_password" value=""><br>
+            
+         </fieldset>
+       </div>
+      </div>         
+            
+      <div class="change_settings_blue_bg_container">
+         <div class="change_settings_blue_bg_top"></div>
+         <div class="change_settings_blue_bg">
+            <fieldset>
+             <p class="limit_display"><b>RSS Feed</b></p>
+             
+             <input type=checkbox id="enable_rss_feed" name="enable_rss_feed" value="1" {if $ticket_user_settings_info->enable_rss_feed} checked {/if}>Enable my RSS feed via <a href="#">http://server/run.php/rss/kabir.rss</a><br>
+             <input type=checkbox id="include_rss"     name="include_rss"     value="1" {if $ticket_user_settings_info->include_rss}     checked {/if}>Include only 
+             <input type="text" name="number_of_issues_for_rss" id="number_of_issues_for_rss" style="width:30px;" value="{$ticket_user_settings_info->number_of_issues_for_rss}"> issues in the rss feed<br>
+             <span id="number_of_issues_for_rss_error" style="color:red;"></span><br>
+            
+            </fieldset>
+             <input type="button" name="save" id="save" value="Save" style="width:100px;" onclick="return validateUserSettingsForm()" >
+         </div>
+         <div class="change_settings_blue_bg_bottom"></div>
+      </div>        
+
+    </div>
+</div>
+
+</form>
+
+

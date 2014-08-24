@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Yearly Report </title>
+		<script type="text/javascript" src="/its/ext/js/highcharts/highcharts.js"></script>     
+		<script type="text/javascript" src="/its/views/ticket_reports/reports.js"></script>     		
+		<!--[if IE]>
+			<script type="text/javascript" src="/its/ext/js/highcharts/excanvas.compiled.js"></script>
+		<![endif]-->
+		<link href="/its/views/common/css/default.css" rel="stylesheet" type="text/css" />
+		
+		
+		<script type="text/javascript">
+		   var noisyChartData   = new Array();  
+		   var ticketChartData  = new Array(); 
+		   var monthlyChartData = new Array(); 
+		   var resolverArray    = new Array(); 
+		   var assignedTicketArray    = new Array(); 
+		   var completedTicketArray   = new Array();
+		   var head                   = new Array(); 
+		   
+		   {foreach from=$report_header item=head}
+		      head.push("{$head}");
+		   {/foreach}
+		   
+		   {foreach from=$ticket_report_data key=ticket_status item=ticket}
+		    {if $ticket_status neq "Total"}
+		     var elmt = new Array();
+		     elmt.push("{$ticket_status}");
+		     elmt.push({$ticket.total});
+           ticketChartData.push(elmt); 
+           {/if}
+		   {/foreach}
+		   
+		   {foreach from=$noisy_projects_data key=project_name item=project} 
+		     {if $project_name neq "Total"}  
+		      var data = new Array();
+		      {foreach from=$project.data item=ticket_num}
+		         data.push({$ticket_num});
+		      {/foreach}
+		      var source = new Object();
+            source.name = "{$project_name}";
+            source.data = data;
+            noisyChartData.push(source); 
+            {/if}
+		   {/foreach}
+		   		          
+         {foreach from=$resolver_report_data key=resolver item=ticket}
+            resolverArray.push("{$resolver}");
+		      assignedTicketArray.push({$ticket.assigned});
+		      completedTicketArray.push({$ticket.completed});
+		   {/foreach}
+		   
+		    var assTicket  = new Object();
+          assTicket.name = "Assigned";
+          assTicket.data = assignedTicketArray;
+          
+          var comTicket  = new Object();
+          comTicket.name = "Completed";
+          comTicket.data = completedTicketArray;
+          
+          monthlyChartData.push(assTicket);
+          monthlyChartData.push(comTicket);
+		
+       {literal}		
+          $(document).ready(function() {
+            {/literal}
+            {if $noisy_projects_data}
+		         showNoisyChart(noisyChartData,head);
+		      {/if}
+		      {if $ticket_report_data}
+		         showTicketChart(ticketChartData);
+		      {/if}
+		      {if $resolver_report_data}
+		         showResolverReport(resolverArray,monthlyChartData);
+		      {/if}
+		        {literal}
+		    });
+		    
+		  {/literal}		    
+		</script>
+     
+	</head>
+	<body>
+	 <div class="its-post">
+    <div class="its-post-tl"></div>
+    <div class="its-post-tr"></div>
+    <div class="its-post-bl"></div>
+    <div class="its-post-br"></div>
+    <div class="its-post-tc"></div>
+    <div class="its-post-bc"></div>
+    <div class="its-post-cl"></div>
+    <div class="its-post-cr"></div>
+    <div class="its-post-cc"></div>
+    <div class="its-post-body">
+    <div class="its-post-inner its-itsicle">                                    
+       <div class="its-postcontent">	    
+           <h2>Report ({$report_type})</h2>
+           <p><strong>Tickets Report </strong></p>
+           <div class="stat_and_staff_container">
+          {if $ticket_report_data}
+           
+	             <div class="report_left">
+                   <table style="text-align:center;" width="100%" border="0" cellspacing="0" cellpadding="1">
+                     <tr class="tbl_heading">
+                       <td align="center">Status</td>
+                        {foreach from=$report_header item=head}
+                         <td align="center">{$head}</td>
+                        {/foreach}
+                        <td align="center">Total</td>
+                        <td align="center">Average</td>
+                     </tr>
+                     {foreach from=$ticket_report_data key=ticket_status item=ticket}
+		                    <tr>
+                              <td align="left">{$ticket_status}</td>
+                              {foreach from=$ticket.data item=ticket_num}
+                                 <td align="center">{$ticket_num}</td>
+                              {/foreach}
+                              <td align="center">{$ticket.total}</td>
+                              <td align="center">{$ticket.average}</td>
+                          </tr>
+		               {/foreach}
+                   </table>
+                </div>
+            
+                <div class="report_right" id="ticket_report_chart" style="width: 600px; height: 300px; margin: 0 auto"></div>	
+          {else}
+              <div> No data Available.</div> 
+              <br>
+          {/if}
+           </div>
+           <div style="clear: both;"></div>
+           <div class="back_next">
+               <p><strong>Resolvers Report ({$resolver_label})</strong></p>
+           </div>
+           
+           {if $resolver_report_data} 
+           <div class="stat_and_staff_container">         
+              <div class="report_left">
+                  <table style="text-align:center;" width="100%" border="0" cellspacing="0" cellpadding="1">
+                    <tr class="tbl_heading">
+                      <td width="25%" align="center">Staff</td>
+                      <td width="23%">Assigned</td>
+                      <td width="24%">Completed</td>
+                      <td width="28%">% Completed</td>
+                      </tr>
+                    {foreach from=$resolver_report_data key=resolver item=ticket}
+                    <tr>
+                      <td align="left">{$resolver}</td>
+                      <td align="center">{$ticket.assigned}</td>
+                      <td align="center">{$ticket.completed}</td>
+                      <td align="center">{$ticket.percantage}%</td>
+                    </tr>
+                    {/foreach}
+                  </table>
+              </div>
+               <br />
+            <br />
+             <div class="report_right" id="resolver_report_chart" style="width: 620px; height: 250px; margin: 0 auto"></div>
+            </div>
+           {else}
+            <div> No data available.</div>
+             <br>
+           {/if}
+     
+            <br />
+             <div class="back_next">
+               <p><strong>Noisy Projects List </strong></p>
+           </div>
+           
+            {if $noisy_projects_data}
+            <div class="source">
+                <table width="650" style="text-align:center;" border="0" cellspacing="0" cellpadding="1">
+                  <tr class="tbl_heading">
+                    <td align="center">Source</td>
+                   {foreach from=$report_header item=head}
+                         <td>{$head}</td>
+                        {/foreach}
+                    <td>Total</td>
+                    <td>Average</td>
+                  </tr>
+                   {foreach from=$noisy_projects_data key=project_name item=project}
+                  <tr>
+                    <td align="left">{$project_name|stripslashes}</td>
+                   {foreach from=$project.data item=ticket_num}
+                                 <td align="center">{$ticket_num}</td>
+                   {/foreach}
+                   <td align="center">{$project.total}</td>
+                   <td align="center">{$project.average}</td>
+                  </tr>
+                  {/foreach}
+                </table>
+            </div>
+            <br />
+            <br />
+            <div class="stat_and_staff_container">
+		       <div id="noisy_project_chart" style="width: 700px; height: 230px; margin: 0 10px 0 0;"></div>	
+		      </div>
+	         {else}
+	            <div> No data available. </div>
+	         {/if}
+	           <br />
+	
+        <div class="cleared"></div>                                                                           
+    </div>
+</div>                          
+</div>
+
+</div>
+	</body>
+</html>

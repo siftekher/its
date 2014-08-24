@@ -1,0 +1,97 @@
+
+<div class="its-nav">
+   <div class="l"></div>
+   <div class="r"></div>
+   <ul class="its-menu">
+      <li>
+         <a href="/its/run.php/Ticket" {if $topnav eq "home"}class="active"{/if}><span class="l"></span><span class="r"></span><span class="t">Home</span></a>
+      </li>
+      <li>
+         <a href="#" {if $topnav eq "ticket"}class="active"{/if}><span class="l"></span><span class="r"></span><span class="t">Tickets</span></a>
+         <ul>
+            
+            <li><a href="/its/run.php/NewTicket">New Ticket</a></li>
+            {if $userData.settings.enable_issues_created_by_me eq "1"}
+                <li><a href="/its/run.php/MyTickets/list">My Tickets (created by me)</a></li> 
+            {/if}
+            {if $userData.settings.enable_issues_assigned_to_me eq "1"}
+                <li><a href="/its/run.php/MyTickets/assigned">My Assignments</a></li>
+            {/if}
+            <li><a href="#">My Projects (sources)</a>
+               <ul>
+                  {if $userData.resolver_sources|count gt 0 || $userData.authorized_sources|count gt 0}
+                     <li><a href="/its/run.php/MyTickets/myproject/" {if $source_id eq ''}class="tick_active"{/if}>All Project</a></li> 
+                      {if $userData.resolver_sources|count gt 0}
+                         {foreach from=$userData.resolver_sources item=item}
+                            <li><a href="/its/run.php/MyTickets/myproject/{$item->source_id}" {if $item->source_id eq $source_id}class="tick_active"{/if}>{$item->short_name}</a></li> 
+                         {/foreach}
+                      {/if}
+                     {if $userData.authorized_sources|count gt 0}
+                         {foreach from=$userData.authorized_sources item=item}
+                            <li><a href="/its/run.php/MyTickets/myproject/{$item->source_id}" {if $item->source_id eq $source_id}class="tick_active"{/if}>{$item->short_name}</a></li> 
+                         {/foreach}
+                      {/if}
+                  {/if}
+               </ul>
+            </li>                      
+            <li><a href="#">Reports</a>
+               <ul>
+                  <li><a href="/its/run.php/TicketReport/recent">Recent Tickets</a></li>
+                  <li><a href="/its/run.php/TicketReport/this_week">This Week</a></li>
+                  <li><a href="/its/run.php/TicketReport/this_month">This Month</a></li>
+                  <li><a href="/its/run.php/TicketReport/last_month">Last Month</a></li> 
+                  <li><a href="/its/run.php/TicketReport">This Year</a></li>
+               </ul>
+            </li>
+<!--
+            <li><a href="#">Menu Subitem 2</a></li>
+            <li><a href="#">Menu Subitem 3</a></li>
+-->
+         </ul>
+      </li>
+      {assign var=is_admin value=0}
+      {foreach from = $userData.user_types item=item }
+         {if $item > 1}
+            {assign var=is_admin value=1}   
+          {/if}
+      {/foreach}
+      {if $is_admin eq "1"}
+         <li>
+            <a href="#" {if $topnav eq "admin"}class="active"{/if}><span class="l"></span><span class="r"></span><span class="t">Admin </span></a>
+            <ul>
+               <li><a href="#">Manage Source</a>
+                  <ul>
+                     <li><a href="/its/run.php/SourceManager">New Source</a></li>
+                     <li><a href="/its/run.php/SourceManager/list">List Sources</a></li>
+                  </ul>
+               </li>
+               
+               <li><a href="#">Manage Users</a>
+                  <ul>
+                     <li><a href="/its/run.php/UserManager">New User</a></li>
+                     <li><a href="/its/run.php/UserManager/list">List User</a></li>
+                  </ul>
+               </li>
+               <li><a href="#">Manage Tags</a>
+                  <ul>
+                     <li><a href="/its/run.php/TagManager">New Tag</a></li>
+                     <li><a href="/its/run.php/TagManager/list">List Tags</a></li>
+                  </ul>
+               </li>
+               <!--<li><a href="/its/run.php/Ticket/log">Activity Log</a></li> -->
+            </ul>
+         </li>         
+      {/if}
+      <li>
+         <a href="/its/run.php/ChangeSettings" {if $topnav eq "changesettings"}class="active"{/if}><span class="l"></span><span class="r"></span><span class="t">Settings</span></a>
+      <li>
+         <a href="#"><span class="l"></span><span class="r"></span><span class="t">About</span></a>
+      </li>
+      <li>
+         <a href="#"><span class="l"></span><span class="r"></span><span class="t">Help</span></a>
+      </li>
+      <li>
+         <a href="/its/run.php/Login/logout"><span class="l"></span><span class="r"></span><span class="t">Logout</span></a>
+      </li>
+   </ul>
+</div>

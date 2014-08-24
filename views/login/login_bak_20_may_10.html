@@ -1,0 +1,72 @@
+<link rel="stylesheet" type="text/css" href="/its/views/common/style.css" />
+<!--[if IE 7]><link rel="stylesheet" href="/its/views/common/style.ie7.css" type="text/css" media="screen" /><![endif]-->
+
+<div class="login_main_container">
+
+
+
+{if $message}
+<!-- Msg container begin-->
+<div class="its-post">
+   <b class="b1f"></b><b class="b2f"></b><b class="b3f"></b><b class="b4f"></b>	 	
+      <div class="msg">
+         <!-- Massage begin -->
+         {$message}
+         <!-- Massage end -->
+      </div>
+<b class="b4f"></b><b class="b3f"></b><b class="b2f"></b><b class="b1f"></b>
+</div>
+<!-- Msg container end -->
+{/if}
+
+
+<div class="its-post">
+<div class="its-post-tl"></div>
+    <div class="its-post-tr"></div>
+    <div class="its-post-bl"></div>
+    <div class="its-post-br"></div>
+    <div class="its-post-tc"></div>
+    <div class="its-post-bc"></div>
+    <div class="its-post-cl"></div>
+    <div class="its-post-cr"></div>
+    <div class="its-post-cc"></div>
+    <div class="its-post-body">
+    <div class="its-post-inner its-itsicle">
+    
+    
+                    <!-- contents starts here -->
+    
+    
+    
+    
+                <h2 class="its-postheader">
+                    <img src="../views/common/images/postheadericon.png" width="29" height="29" alt="postheadericon" />
+                    EVOKNOW ITS										
+                </h2>
+                <div class="its-postcontent">
+                    <!-- its-login begin -->
+                <div class="login_container">
+                   <form name="loginForm" method="post" action="{$smarty.const.SUPER_CONTROLLER_URL_PREFIX}Login/login">
+                   <p>Email Address</p>
+                   <p><input type="text" class="login_input" name="email" /></p>
+                   <p>Password</p>
+                   <p><input type="password" class="login_input" name="password" /></p>
+                   <p class="loginSubmit_p"><input type="submit" value="login" class="its-button"></p>
+                   </form>
+                 </div>
+                    <!-- its-login end -->
+                </div>
+
+
+    
+                    <!-- contents ends here -->
+    
+    
+</div>                          
+</div>
+
+
+
+</div>
+
+</div>

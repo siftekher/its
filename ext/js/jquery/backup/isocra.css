@@ -1,0 +1,41 @@
+
+.tDnD_whileDrag {
+   border: 1px dotted #000;
+	background-color: #E5E5E5;
+	opacity:0.4; 
+}
+
+tr.alt td {
+	background-color: #ecf6fc;
+}
+
+tr.myDragClass td {
+    color: yellow;
+    background-color: #E5E5E5;
+}
+
+td.dragHandle {
+    
+}
+.slug tr:hover{
+	background-color: #9999CC;
+}
+
+td.showDragHandle {
+	background-image: url(images/updown2.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+	cursor: move;
+}
+
+
+.dragImg {
+   background-image: url(/jbpladmin/templates/images/up_down.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+	cursor: move;
+
+}
+
+
+

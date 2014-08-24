@@ -1,0 +1,39 @@
+<script type="text/javascript" src="/its/views/tag/tag_manager.js"></script>
+{if $msg neq ''}  
+<div class="its-post_msg">   
+    <b class="b1f"></b><b class="b2f"></b><b class="b3f"></b><b class="b4f"></b>	 	
+       	   <div class="msg">{$msg}</div>
+    <b class="b4f"></b><b class="b3f"></b><b class="b2f"></b><b class="b1f"></b>         
+</div>
+{/if}
+<div class="its-post">
+    <div class="its-post-tl"></div>
+    <div class="its-post-tr"></div>
+    <div class="its-post-bl"></div>
+    <div class="its-post-br"></div>
+    <div class="its-post-tc"></div>
+    <div class="its-post-bc"></div>
+    <div class="its-post-cl"></div>
+    <div class="its-post-cr"></div>
+    <div class="its-post-cc"></div>
+    <div class="its-post-body">
+    <div class="its-post-inner its-itsicle">                                    
+       <div class="its-postcontent">	          
+       <h2>Manage Tag >> {if $tag_id eq ''} Adding a New Tag{else}Editing a Tag{/if}</h2>  
+   	   <div style="margin-top:10px;"></div>
+   <form name="add_tag" onsubmit="return doValidation();" id="add_tag" {if $tag_id eq ''} action="/its/run.php/TagManager/add" {else} action="/its/run.php/TagManager/update/{$tag_id}" {/if} method="post">
+   	   <div class="field_label">Enter tag</div>
+   	   <div class="input_box"><input type="text" name="tag" id="tag" onblur="doValidation();" value={$tag_name}><span id="tag_error_msg" class="error_msg"></span></div>
+   	   <div class="cleared"></div> 
+   	   <div class="submit_button">
+   	   	<input class="its-button" type="submit" {if $tag_id eq ''} value="Add" {else} value="Update" {/if}>   	   	
+   	   </div>
+   </form>       
+   
+   <div class="cleared"></div>                                                                           
+    </div>
+</div>                          
+</div>
+
+</div>
+</div>

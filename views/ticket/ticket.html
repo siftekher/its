@@ -1,0 +1,124 @@
+{if $ticket->color eq 'gray'}
+   {assign var=ticket_priority value='priority_low'}
+{elseif $ticket->color eq 'blue'}
+   {assign var=ticket_priority value='priority_normal'}
+{elseif $ticket->color eq 'orange'}
+   {assign var=ticket_priority value='priority_high'}
+{elseif $ticket->color eq 'red'}
+   {assign var=ticket_priority value='priority_critical'}
+{else}
+   {assign var=ticket_priority value='priority_low'}
+{/if}
+
+<div class="its-post {$ticket_priority}" id="ticket_summery_{$ticket->ticket_id}" >
+   <div class="its-post-tl"></div>
+   <div class="its-post-tr"></div>
+   <div class="its-post-bl"></div>
+   <div class="its-post-br"></div>
+   <div class="its-post-tc"></div>
+   <div class="its-post-bc"></div>
+   <div class="its-post-cl"></div>
+   <div class="its-post-cr"></div>
+   <div class="its-post-cc"></div>
+   <div class="its-post-body">
+      <div class="its-post-inner its-itsicle">      	
+         <h2 class="its-postheader">
+            <img src="/its/views/common/images/postheadericon.png" width="29" height="29" alt="postheadericon" >
+            {$ticket->ticket_id} - {$ticket->title} ({$ticket->status|upper})
+         </h2>
+     
+         Submitted on {$ticket->create_date} by 
+         <a href="/its/run.php/MyTickets/list/{$ticket->user_id}">
+            {$ticket->first_name|stripslashes} {$ticket->last_name|stripslashes}
+         </a> 
+         {assign var=source_id value=$ticket->source_id}
+         for {$source_list.$source_id}
+      
+                  
+         <div class="its-postcontent">
+            <!-- itsicle-content begin -->
+            <p>{$ticket->notes|stripslashes|truncate:$smarty.const.MAX_EXCERPT_LENGTH:"...":true|nl2br}</p>
+            <div style="height:27px;">
+             <div id="action_btn_div_{$ticket->ticket_id}" style="display:none">     
+            <p>
+               <span class="its-button-wrapper">
+                  <span class="l"> </span>
+                  <span class="r"> </span>
+                  <a class="its-button" href="{$smarty.const.SUPER_CONTROLLER_URL_PREFIX}ticket/details/{$ticket->ticket_id}"> View Details </a>
+               </span>
+               {if $self_assign_flag}
+               <span class="its-button-wrapper">
+                  <span class="l"> </span>
+                  <span class="r"> </span>
+                  <a class="its-button" onclick="assignTicketToSelf('{$ticket->ticket_id}')" href="javascript:void(0)">Self Assign</a>
+               </span>
+               {/if}
+               <span class="its-button-wrapper">
+                  <span class="l"> </span>
+                  <span class="r"> </span>
+                  <a onclick="showDetailDialog('{$ticket->ticket_id}')" class="its-button" href="javascript:void(0)">Add Details</a>
+               </span>
+               <span class="its-button-wrapper">
+                  <span class="l"> </span>
+                  <span class="r"> </span>
+                  <a class="its-button" onclick="showTagDialog('{$ticket->ticket_id}')" href="javascript:void(0)">Add Tag</a>
+               </span>													
+               <span class="its-button-wrapper">
+                  <span class="l"> </span>
+                  <span class="r"> </span>
+                  <a class="its-button"  href="javascript:void(0);" onclick="javascript:printTicket('{$ticket->ticket_id}');">Print</a>
+               </span>
+            </p>
+         </div> 
+      </div> 
+            <div class="cleared"></div>  
+            <div>
+                {foreach item=tag_obj key=index from=$tag_list name="tag"}
+                      <a href="/its/run.php/search/tag/{$tag_obj->tag_slug}"> {$tag_obj->tag_label|stripslashes|escape:"htmlall"} </a> 
+                      {if $smarty.foreach.tag.last}{else}|{/if} 
+                {/foreach}
+            </div>    
+            <div class="cleared"></div>                
+            <!-- /itsicle-content end -->                        
+         </div>
+       
+       
+      </div>                          
+   </div>
+</div>
+<script>
+        $("#ticket_summery_{$ticket->ticket_id}").hover(function()  
+       {ldelim}
+             $("#action_btn_div_{$ticket->ticket_id}").fadeIn("slow");
+              
+         {rdelim}, function() {ldelim}
+             $("#action_btn_div_{$ticket->ticket_id}").fadeOut("slow");
+       {rdelim});
+   
+ </script>
+ 
+{literal}
+<script>
+function printTicket(ticketId)
+{
+   //window.open ("/its/run.php/ticket/print/" + ticketId,"mywindow", "location=1, width=860, height=760, top=160"); 
+   var pageURL = "/its/run.php/ticket/print/" + ticketId;
+
+   var w       = screen.width/2;
+   var h       = screen.height/2 + 200;
+   
+   PopupCenter(pageURL, 'PrintTicket',w,h);
+}
+
+function PopupCenter(pageURL,titlep,w,h) 
+{
+   var left = (screen.width/2)-(w/2);
+   var top = (screen.height/2)-(h/2);
+   //var top = (screen.height/2)-200;
+   var args = 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,copyhistory=no,width='+w+',height='+h+',top='+top+',left='+left;
+   var ptitle = encodeURI(titlep);
+   var targetWin = window.open(pageURL, ptitle, args);
+} 
+
+</script>
+{/literal}

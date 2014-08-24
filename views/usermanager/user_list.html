@@ -1,0 +1,75 @@
+<script type="text/javascript" src="/its/ext/js/tablesorter/jquery.tablesorter.js"></script>
+<link rel="stylesheet" href="/its/views/common/tablesorter.css" type="text/css" id="" media="print, projection, screen" />
+{if $msg neq ''}  
+<div class="its-post_msg">
+    <b class="b1f"></b><b class="b2f"></b><b class="b3f"></b><b class="b4f"></b>	 	
+       	   <div class="msg">{$msg}</div>
+    <b class="b4f"></b><b class="b3f"></b><b class="b2f"></b><b class="b1f"></b>         
+</div>
+{/if}
+<div class="its-post">
+    <div class="its-post-tl"></div>
+    <div class="its-post-tr"></div>
+    <div class="its-post-bl"></div>
+    <div class="its-post-br"></div>
+    <div class="its-post-tc"></div>
+    <div class="its-post-bc"></div>
+    <div class="its-post-cl"></div>
+    <div class="its-post-cr"></div>
+    <div class="its-post-cc"></div>
+    <div class="its-post-body">
+    <div class="its-post-inner its-itsicle">                                    
+       <div class="its-postcontent">
+          <h2>Manage User</h2> 
+   	      <div class="user_list_manager_container"> 
+   		
+   	      <table name="user_list" class="tablesorter" cellpadding="0" cellspacing="0" width=800>
+             <thead>
+   	         <tr>
+   		          <th><strong>User ID</strong></th>
+   		          <th><strong>Email</strong></th>
+   		          <th><strong>Name</strong></th>
+   		          <th><strong>Status</strong></th>
+   		          <th><strong>Action</strong></th>
+   	         </tr>	
+             </thead>
+             <tbody>
+                {foreach item=user_obj key=index from=$user_list}
+                  {if $index%2 eq 0}
+      	          <tr class="even_row">
+   		               <td class="special_align">{$user_obj->user_id}</td>
+   		               <td>{$user_obj->email}</td>
+   		               <td>{$user_obj->first_name}&nbsp;{$user_obj->last_name}</td>
+   		               <td class="special_align">{$user_obj->status}</td>
+   		               <td class="special_align"><a href="/its/run.php/UserManager/edit/{$user_obj->user_id}">Edit</a>&nbsp;|&nbsp;<a href="#" onclick="confirmation({$user_obj->user_id})">Delete</a></td>
+   	              </tr>	            	      
+                  {else}
+      	          <tr class="odd_row">
+   		               <td class="special_align">{$user_obj->user_id}</td>
+   		               <td>{$user_obj->email}</td>
+   		               <td>{$user_obj->first_name}&nbsp;{$user_obj->last_name}</td>
+   		               <td class="special_align">{$user_obj->status}</td>
+   		               <td class="special_align"><a href="/its/run.php/UserManager/edit/{$user_obj->user_id}">Edit</a>&nbsp;|&nbsp;<a href="#" onclick="confirmation({$user_obj->user_id})">Delete</a></td>
+   	              </tr>	          
+                  {/if}
+               {/foreach}
+            </tbody>  
+          </table> 
+          </div> 
+          </div>                         
+</div>
+</div>
+</div>
+
+{literal}
+ <script>  
+
+   $(document).ready(function() 
+   {
+	    $("table").tablesorter({headers:{4:{sorter: false}},widgets: ['zebra']});
+   });    
+
+
+</script>	 
+
+{/literal}	 

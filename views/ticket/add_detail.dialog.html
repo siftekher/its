@@ -1,0 +1,30 @@
+<div id="dialog-form" title="Add Details" style="display:none;">
+	<p class="dialog-message-box" style="padding-left:5px;"><span class="required-star">*</span> fields are required.</p>
+
+	<form name="add_detail_form" id="add_detail_form" enctype="multipart/form-data">
+	<fieldset>
+
+		<label for="subject" style="float:left;">Subject</label><span class="required-star" style="float:left;"> * &nbsp;</span> <div id="subject_msg" style="color:red; height:15px; float:left;"></div><br/>
+		<input type="text" name="subject" id="subject" class="text ui-widget-content ui-corner-all" style="width:97%" />
+		
+    
+	   <div style="height:10px;"></div>
+
+		<label for="detail" style="float:left;">Details</label><span class="required-star" style="float:left;"> *&nbsp;</span>  <div id="detail_msg" style="color:red; height:15px; float:left;"></div><br/>
+		<textarea name="detail" id="detail" class="text ui-widget-content ui-corner-all" style="width:97%; height:200px;"></textarea>
+		
+   
+	   <div style="height:10px;"></div>
+	   
+      <div id="fileQueue"></div>
+      <div>
+      <span style="float:left;"><input type="file" name="uploadify" id="uploadify" /></span>
+      <!--
+      <span style="float:right;padding-right:13px;"><input type="checkbox"> Clarifications required</span>
+      -->
+      <span style="float:right;padding-right:13px;" id="clarification_container"></span>
+      </div>
+      <div id="uploaded_file_list" style="padding-top:10px;"><br><br></div>
+	</fieldset>
+	</form>
+</div>

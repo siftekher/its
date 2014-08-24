@@ -1,0 +1,1 @@
+a:4:{s:8:"Filename";s:10:"Winter.jpg";s:6:"folder";s:8:"/its/tmp";s:6:"Upload";s:12:"Submit Query";s:9:"PHPSESSID";s:3:"123";}

@@ -1,0 +1,201 @@
+<script type="text/javascript" src="/its/views/sourcemanager/source_manager.js"></script>
+{if $msg neq ''}  
+<div class="its-post_msg">    	
+    <b class="b1f"></b><b class="b2f"></b><b class="b3f"></b><b class="b4f"></b>	 	
+       	   <div class="msg">{$msg}</div>
+    <b class="b4f"></b><b class="b3f"></b><b class="b2f"></b><b class="b1f"></b>         
+</div>
+{/if}	
+	 <div class="its-post">
+    <div class="its-post-tl"></div>
+    <div class="its-post-tr"></div>
+    <div class="its-post-bl"></div>
+    <div class="its-post-br"></div>
+    <div class="its-post-tc"></div>
+    <div class="its-post-bc"></div>
+    <div class="its-post-cl"></div>
+    <div class="its-post-cr"></div>
+    <div class="its-post-cc"></div>
+    <div class="its-post-body">
+    <div class="its-post-inner its-itsicle">     	
+    	<h2>Manage Source >> {if $source_id eq ''} Adding a New Source{else}Editing a Source{/if}</h2>
+       {if $source_id eq ''}
+     	 <a onclick="showSourceDialog()" href="javascript:void(0)">Copy From Existing source</a>
+     	 <div class="cleared"></div>
+     	 
+     	 <div id="dialog-source" title="Existing Sources" style="display:none;">
+            <div align="left">
+               <span><b>Copy From Existing Sources:</b></span>
+               <select name="source" id="source" style="margin-top:10px;">
+               {foreach item=source_obj key=index from=$source_list}
+                  <option value="{$source_obj->source_id}">{$source_obj->name|stripslashes}</option>   
+               {/foreach}
+               </select>
+            </div>
+      </div>
+      {/if}
+     	 
+       <div class="its-postcontent"> 
+         
+   <form name="add_source" id="add_source" onsubmit="return doValidation();" {if $source_id eq ''} action="/its/run.php/SourceManager/add" {else} action="/its/run.php/SourceManager/update/{$source_id}" {/if} method="post">
+   <div class="manage_add_source" style="width:640px;">
+     <div class="field_box">
+   	   <div class="field_label_big">Source Name<br><span id="name_error_msg" class="error_msg"></span></div>
+   	   <div class="input_box"><input type="text" name="name" id="name" size="40" value="{$name|stripslashes}"></div>
+      </div>
+      <div class="field_box">
+   	   <div class="field_label_big">Source Short Name<br><span id="short_name_error_msg" class="error_msg"></span></div>
+   	   <div class="input_box"><input type="text" name="short_name" id="short_name" value="{$short_name|stripslashes}" size="40"></div>
+      </div>
+       <div class="cleared"></div>
+      <div class="field_box">
+   	   <div class="field_label_big">POP Email<br><span id="pop_email_error_msg" class="error_msg"></span></div>
+   	   <div class="input_box"><input type="text" name="pop_email" id="pop_email" size="40" value="{$pop_email}"></div>
+      </div>
+      <div class="field_box"> 
+   	   <div class="field_label_big">POP Password<br><span id="pop_password_error_msg" class="error_msg"></span></div>
+   	   <div class="input_box"><input type="password" name="pop_password" id="pop_password" size="40"></div>
+      </div>
+       <div class="cleared"></div>
+      <div class="field_box">
+   	   <div class="field_label_big">POP Server<br><span id="pop_server_error_msg" class="error_msg"></span></div>
+   	   <div class="input_box"><input type="text" name="pop_server" id="pop_server" size="40" value="{$pop_server}"></div>
+      </div>
+      <div class="field_box">
+   	   <div class="field_label_big">Minimun Image Attachment Size<br><span id="min_image_attachment_size_error_msg" class="error_msg"></span></div>
+   	   <div class="input_box"><input type="text" name="min_image_attachment_size" id="min_image_attachment_size" size="40" value="{$min_image_attachment_size}"></div>
+      </div>
+       <div class="cleared"></div>
+   	   <div class="field_label_big">Footer Text<br><span id="footer_text_error_msg" class="error_msg"></span></div>
+       <div class="cleared"></div>
+   	   <div class="text_area"><textarea name="footer_text" id="footer_text" size="40">{$footer_text|stripslashes}</textarea></div>
+       <div class="cleared"></div>
+      <div class="field_box">
+   	   <div class="field_label_big">Reply From Name<br><span id="reply_from_name_error_msg" class="error_msg"></span></div>
+   	   <div class="input_box"><input type="text" name="reply_from_name" id="reply_from_name" size="40" value="{$reply_from_name}"></div>
+      </div>
+       <div class="field_box">
+   	   <div class="field_label_big">Reply From Address<br><span id="reply_from_address_error_msg" class="error_msg"></span></div>
+   	   <div class="input_box"><input type="text" name="reply_from_address" id="reply_from_address" size="40" value="{$reply_from_address}"></div>
+      </div>
+       <div class="cleared"></div>
+   	   <div class="field_label_big">New Ticket Email Subject<br><span id="new_ticket_email_subject_error_msg" class="error_msg"></span></div>
+   	   <div class="input_box"><input type="text" name="new_ticket_email_subject" id="new_ticket_email_subject" size="40" value="{$new_ticket_email_subject}"></div>
+       <div class="cleared"></div>
+   	   <div class="field_label_big">New Ticket Email Template<br><span id="new_ticket_email_template_error_msg" class="error_msg"></span></div>
+   	   <div class="text_area"><textarea type="text" name="new_ticket_email_template" id="new_ticket_email_template">{$new_ticket_email_template|stripslashes}</textarea></div>
+       <div class="cleared"></div>
+   	   <div class="field_label_big">Existing Ticket Email Subject<br><span id="existing_ticket_email_subject_error_msg" class="error_msg"></span></div>
+   	   <div class="input_box"><input type="text" name="existing_ticket_email_subject" id="existing_ticket_email_subject" size="40" value="{$existing_ticket_email_subject}"></div>
+
+       <div class="cleared"></div>
+   	   <div class="field_label_big">Existing Ticket Email Template<br><span id="existing_ticket_email_template_error_msg" class="error_msg"></span></div>
+   	   <div class="text_area"><textarea type="text" name="existing_ticket_email_template" id="existing_ticket_email_template" size="40">{$existing_ticket_email_template|stripslashes}</textarea></div>
+       <div class="cleared"></div>
+   	   <div class="field_label_big">Status Reply Email Subject<br><span id="status_reply_email_subject_error_msg" class="error_msg"></span></div>
+   	   <div class="input_box"><input type="text" name="status_reply_email_subject" id="status_reply_email_subject" size="40" value="{$status_reply_email_subject}"></div>
+       <div class="cleared"></div>
+   	   <div class="field_label_big">Status Reply Email Template<br><span id="status_reply_email_template_error_msg" class="error_msg"></span></div>
+   	   <div class="text_area"><textarea type="text" name="status_reply_email_template" id="status_reply_email_template" size="40">{$status_reply_email_template|stripslashes}</textarea></div>
+       <div class="cleared"></div>
+   	   <div class="field_label_big">List Ticket Email Subject<br><span id="list_ticket_email_subject_error_msg" class="error_msg"></span></div>
+   	   <div class="input_box"><input type="text" name="list_ticket_email_subject" id="list_ticket_email_subject" size="40" value="{$list_ticket_email_subject}"></div>
+       <div class="cleared"></div>
+   	   <div class="field_label_big">List Ticket Email Template<br><span id="list_ticket_email_template_error_msg" class="error_msg"></span></div>
+   	   <div class="text_area"><textarea type="text" name="list_ticket_email_template" id="list_ticket_email_template" size="40">{$list_ticket_email_template|stripslashes}</textarea></div>
+       <div class="cleared"></div>
+      <div class="field_box">
+   	   <div class="field_label_big">Max Response Time<br><span id="max_response_time_error_msg" class="error_msg"></span></div>
+   	   <div class="input_box"><input type="text" name="max_response_time" id="max_response_time" size="40" value="{$max_response_time}"></div>
+      </div>
+      <div class="field_box">
+      <div class="field_label_big">Status: {$status}</div>
+   	   <div class="input_box" style="text-align:left;">    	   	  	   	 
+         <select name="status" id="status">         	 
+         	 <option selected>Select</option>
+           <option value="1" {if $status eq 1}selected{/if}>Active</option>
+           <option value="2" {if $status eq 2}selected{/if}>Inactive</option>
+         </select>   	   	 
+   	   </div>
+      </div>
+       <div class="cleared"></div>
+       <div class="field_label_big">Automatically assign ticket to available staff member</div>
+   	   <div class="input_box">
+   	      <input type="radio" class="radio" name="auto_assign_staff" id="auto_assign_staff" value="1" {if $auto_assign_staff eq 1}checked{/if}/> Yes
+          <input type="radio" class="radio" name="auto_assign_staff" id="auto_assign_staff" value="0" {if $auto_assign_staff eq 0}checked{/if}/> No
+       </div>
+   	     
+       <div class="cleared"></div>
+       <div class="field_label_big">Automatically send email notification to</div>      	   
+       <div class="input_box">
+         <input type="checkbox" class="checkbox" name="auto_notify_supervisor" id="auto_notify_supervisor" value="1" {if $auto_notify_supervisor eq 1}checked{/if}/>Supervisor
+         <input type="checkbox" class="checkbox" name="auto_notify_executive" id="auto_notify_executive" value="1" {if $auto_notify_executive eq 1}checked{/if}/>Executive
+         <input type="checkbox" class="checkbox" name="auto_notify_staff_members" id="auto_notify_staff_members" value="1" {if $auto_notify_staff_members eq 1}checked{/if}/>Staff members
+       </div>
+   	    
+       <div class="cleared"></div>
+       <div class="field_label_big">Enable RSS Feed</div>
+   	   <div class="input_box">
+   	      <input type="radio" class="radio" name="enable_rss_feed" id="enable_rss_feed" value="1" {if $enable_rss_feed eq 1}checked{/if}/> Yes
+          <input type="radio" class="radio" name="enable_rss_feed" id="enable_rss_feed" value="0" {if $enable_rss_feed eq 0}checked{/if}/> No
+       </div>	   
+   	   <!--
+       <div class="cleared"></div>
+   	   <div class="field_label_big">Auto Notify Supervisor</div>
+   	   <div class="input_box">
+   	      <input type="radio" class="radio" name="auto_notify_supervisor" id="auto_notify_supervisor" value="1" {if $auto_notify_supervisor eq 1}checked{/if}/> Yes
+          <input type="radio" class="radio" name="auto_notify_supervisor" id="auto_notify_supervisor" value="0" {if $auto_notify_supervisor eq 0}checked{/if}/> No
+       </div>  
+       <div class="cleared"></div>
+   	   <div class="field_label_big">Auto Notify Executive</div>
+   	   <div class="input_box">
+   	      <input type="radio" class="radio" name="auto_notify_executive" id="auto_notify_executive" value="1" {if $auto_notify_executive eq 1}checked{/if} checked /> Yes
+          <input type="radio" class="radio" name="auto_notify_executive" id="auto_notify_executive" value="0" {if $auto_notify_executive eq 0}checked{/if}/> No          
+       </div>      
+       -->             	      	      	      	   
+       </div>
+       <div class="manage_add_source">
+   	     <div class="submit_button">
+          <span class="its-button-wrapper"><span class="l"> </span><span class="r"> </span><input type="submit" value="{if $source_id eq ''}Save{else}Update{/if}" class="its-button"></span>
+   	      <input type="hidden" name="source_id" id="source_id" size="40" value="{$source_id}">
+         </div>
+         <div class="submit_button">
+   	       <span class="its-button-wrapper"><span class="l"> </span><span class="r"> </span><input value="Cancel" type="button" class="its-button" onclick="javascript:gotoHomePage();"></span>
+   	     </div>
+       </div>
+       <div class="cleared"></div>
+       <div class="manage_add_source_bottom">
+   	     <div class="submit_button">
+          <span class="its-button-wrapper"><span class="l"> </span><span class="r"> </span><input type="submit" value="{if $source_id eq ''}Save{else}Update{/if}" class="its-button"></span>
+   	      <input type="hidden" name="source_id" id="source_id" size="40" value="{$source_id}">
+         </div>
+         <div class="submit_button">
+   	       <span class="its-button-wrapper"><span class="l"> </span><span class="r"> </span><input value="Cancel" type="button" class="its-button" onclick="javascript:gotoHomePage();"></span>
+   	     </div>
+       </div>
+   </form>   
+       <div class="cleared"></div>
+    </div>
+</div>                          
+</div>
+
+</div>
+</div>	 
+{literal}
+ <script>
+    $(document).ready(function() {
+       $('.its-post_msg').fadeOut(6000);
+       initSourceDialog();
+    });
+ </script>	 
+{/literal}	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+
+

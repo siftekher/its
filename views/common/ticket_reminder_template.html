@@ -1,0 +1,35 @@
+
+{if $newTicketList|count gt 0 || $existingTicket|count gt 0 || $recCompleted|count gt 0}
+
+{if $newTicketList|count gt 0}
+New Tickets
+{foreach from=$newTicketList item=item key=key}
+{$item->ticket_id}  {$item->title}  http://{$smarty.const.SITE_URL}/its/run.php/UserTicket/update/{$item->userId}/{$item->ticket_id}/{$item->authKey}
+{/foreach}
+{/if}
+
+
+{if $existingTicket|count gt 0}
+New Tickets
+{foreach from=$existingTicket item=item key=key}
+{$item->ticket_id}  {$item->title}  http://{$smarty.const.SITE_URL}/its/run.php/UserTicket/update/{$item->userId}/{$item->ticket_id}/{$item->authKey}
+{/foreach}
+{/if}
+
+
+{if $recCompleted|count gt 0}
+New Tickets
+{foreach from=$recCompleted item=item key=key}
+{$item->ticket_id}  {$item->title}  http://{$smarty.const.SITE_URL}/its/run.php/UserTicket/update/{$item->userId}/{$item->ticket_id}/{$item->authKey}
+{/foreach}
+{/if}
+
+{else}
+
+No Tickets Available
+
+{/if}
+
+
+Thanks,
+ITS Team

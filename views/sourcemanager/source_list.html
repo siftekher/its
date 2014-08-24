@@ -1,0 +1,77 @@
+{if $msg neq ''}  
+<div class="its-post_msg">
+    <b class="b1f"></b><b class="b2f"></b><b class="b3f"></b><b class="b4f"></b>	 	
+       	   <div class="msg">{$msg}</div>
+    <b class="b4f"></b><b class="b3f"></b><b class="b2f"></b><b class="b1f"></b>         
+</div>
+{/if}
+<div class="its-post">
+    <div class="its-post-tl"></div>
+    <div class="its-post-tr"></div>
+    <div class="its-post-bl"></div>
+    <div class="its-post-br"></div>
+    <div class="its-post-tc"></div>
+    <div class="its-post-bc"></div>
+    <div class="its-post-cl"></div>
+    <div class="its-post-cr"></div>
+    <div class="its-post-cc"></div>
+    <div class="its-post-body">
+    <div class="its-post-inner its-itsicle">                                    
+       <div class="its-postcontent">
+       	<h2>Manage Source</h2> 
+   	<div class="source_list_container">	  
+    <div class="header">
+      <div class="source_id"><strong>Source ID</strong></div>
+      <div class="name"><strong>Name</strong></div>
+      <div class="short_name"><strong>Short Name</strong></div>
+      <div class="pop"><strong>POP Email</strong></div>
+      <div class="status"><strong>Status</strong></div>
+      <div class="action"><strong>Action</strong></div>
+      </div>
+      {foreach item=source_obj key=index from=$source_list}
+         {if $index%2 eq 0}
+         <div class="even">
+            <div class="source_id">{$source_obj->source_id}</div>
+            <div class="name">{$source_obj->name|stripslashes}</div>   
+            <div class="short_name">{$source_obj->short_name|stripslashes}</div>   
+            <div class="pop">{$source_obj->pop_email}</div> 
+            <div class="status">{$source_obj->status}</div> 
+            <div class="action"><a href="/its/run.php/SourceManager/edit/{$source_obj->source_id}">Edit</a>&nbsp;|&nbsp;<a href="#" onclick="confirmation({$source_obj->source_id})">Delete</a></div>  
+        </div>
+         {else}
+         <div class="odd">
+            <div class="source_id">{$source_obj->source_id}</div>
+            <div class="name">{$source_obj->name}</div>   
+            <div class="short_name">{$source_obj->short_name}</div>  
+            <div class="pop">{$source_obj->pop_email}</div> 
+            <div class="status">{$source_obj->status}</div> 
+            <div class="action"><a href="/its/run.php/SourceManager/edit/{$source_obj->source_id}">Edit</a>&nbsp;|&nbsp;<a href="#" onclick="confirmation({$source_obj->source_id})">Delete</a></div>  
+            </div>
+         {/if}
+      {/foreach}
+      
+       <div class="cleared"></div> 
+       </div>                                                                          
+    </div>
+</div>                          
+</div>
+</div>
+</div>
+{literal}
+ <script>
+    $(document).ready(function() {
+       $('.its-post_msg').fadeOut(6000);
+    });
+    
+    function confirmation(tag_id)
+    {
+    	 var DELETE_CONFIRM_MSG = 'Are you sure you want to delete this source?';
+       var deleteok = confirm(DELETE_CONFIRM_MSG);
+       if (deleteok== true) 
+       {
+          window.location="/its/run.php/SourceManager/delete/"+tag_id;          
+       }
+    }    
+ </script>	 
+{/literal}	 
+	 	    

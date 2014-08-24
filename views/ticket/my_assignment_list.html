@@ -1,0 +1,70 @@
+<script type="text/javascript" src="/its/ext/js/jquery/jquery-1.4.2.min.js"></script>
+{if $msg neq ''}  
+<div class="its-post_msg">
+    <b class="b1f"></b><b class="b2f"></b><b class="b3f"></b><b class="b4f"></b>	 	
+       	   <div class="msg">{$msg}</div>
+    <b class="b4f"></b><b class="b3f"></b><b class="b2f"></b><b class="b1f"></b>         
+</div>
+{/if}
+<div class="its-post">
+    <div class="its-post-tl"></div>
+    <div class="its-post-tr"></div>
+    <div class="its-post-bl"></div>
+    <div class="its-post-br"></div>
+    <div class="its-post-tc"></div>
+    <div class="its-post-bc"></div>
+    <div class="its-post-cl"></div>
+    <div class="its-post-cr"></div>
+    <div class="its-post-cc"></div>
+    <div class="its-post-body">
+    <div class="its-post-inner its-itsicle">                                    
+       <div class="its-postcontent">
+       	<h2>My Assignments</h2>
+       	{if $no_ticket neq 1}
+   	<div class="user_list_container"> 	  
+      <div class="header">
+      <div class="tag_id"><strong>Ticket ID</strong></div>
+      <div class="title"><strong>Title</strong></div>
+      <div class="prior"><strong>Priority</strong></div>
+      <div class="date"><strong>Create Date</strong></div>
+      <div class="user_status"><strong>Status</strong></div>
+      <div class="action"><strong>Action</strong></div>
+      </div>
+      {foreach item=ticket_obj key=index from=$ticket_list}
+         {if $index%2 eq 0}
+         <div class="even">
+            <div class="tag_id">{$ticket_obj->ticket_id}</div>
+            <div class="title"><a href="/its/run.php/ticket/details/{$ticket_obj->ticket_id}">{$ticket_obj->title}</a></div>   
+            <div class="prior">{$ticket_obj->priority}</div>   
+            <div class="date">{$ticket_obj->create_date|date_format}</div> 
+            <div class="user_status">{$ticket_obj->status}</div> 
+            <div class="action"><a href="/its/run.php/ticket/details/{$ticket_obj->ticket_id}">View Details</a></div>
+         </div> 
+         {else}
+         <div class="odd">
+            <div class="tag_id">{$ticket_obj->ticket_id}</div>
+            <div class="title"><a href="/its/run.php/ticket/details/{$ticket_obj->ticket_id}">{$ticket_obj->title}</a></div>   
+            <div class="prior">{$ticket_obj->priority}</div>  
+            <div class="date">{$ticket_obj->create_date|date_format}</div> 
+            <div class="user_status">{$ticket_obj->status}</div> 
+            <div class="action"><a href="/its/run.php/ticket/details/{$ticket_obj->ticket_id}">View Details</a></div>
+         </div> 
+         {/if}
+      {/foreach}
+        {else}
+           Currently you are not assigned to any ticket.
+        {/if}
+       <div class="cleared"></div> 
+       </div>                                                                          
+    </div>
+</div>                          
+</div>
+</div>
+{literal}
+ <script>
+    $(document).ready(function() {
+       $('.its-post_msg').fadeOut(6000);
+    });
+ </script>	 
+{/literal}	 
+	 	    
